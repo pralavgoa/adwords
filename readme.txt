@@ -1,0 +1,1 @@
+java -jar adwords.jar C:\_Pralav\personal\projects\Adwords\data\input\input.csv C:\_Pralav\personal\projects\Adwords\data\output\output.csv

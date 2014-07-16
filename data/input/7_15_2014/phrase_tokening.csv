@@ -1,0 +1,24 @@
+Input,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+"Search term report (May 15, 2014-Jun 13, 2014)",,,,,,,,,,,,,,
+Campaign,Match type,Search term,Added/Excluded,Ad group,Clicks,Impressions,CTR,Avg. CPC,Cost,Avg. position,Converted clicks,Cost / converted click,Click conversion rate,View-through conv.
+GCOM_GG_Birth_Records [B],broad,birth records michigan,None,Birth_Records_Online,26,129,20.16%,1.52,39.46,1.6,0,0,0.00%,0
+GCOM_GG_Birth_Records [B],broad,free death records,None,Birth_Records_Online,3,33,9.09%,1.76,5.29,2.5,0,0,0.00%,0
+Total, --, --, --, --,56805,313823,18.10%,1.04,"59,202.26",2.6,1069,55.32,1.88%,0
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+Output,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+Phrase,Clicks,Impressions,Cost,Converted clicks,,,,,,,,,,
+birth,26,129,39.46,0,,,,,,,,,,
+records,29,162,44.75,0,,,,,,,,,,
+michigan,26,129,39.46,0,,,,,,,,,,
+free,3,33,5.29,0,,,,,,,,,,
+death,3,33,5.29,0,,,,,,,,,,
+birth records,26,129,39.46,0,,,,,,,,,,
+records michigan,26,129,39.46,0,,,,,,,,,,
+birth records michigan,26,129,39.46,0,,,,,,,,,,
+free death,3,33,5.29,0,,,,,,,,,,
+death records,3,33,5.29,0,,,,,,,,,,
+free death records,3,33,5.29,0,,,,,,,,,,
