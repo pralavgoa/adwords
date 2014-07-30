@@ -1,6 +1,8 @@
 package pralav.weekend;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
@@ -13,13 +15,16 @@ import com.google.common.io.Files;
 
 public class Adwords {
 
-    private static final String DEFAULT_FILE = "7_15_2014/input_1.csv";
+    private static final String DEFAULT_FILE = "7_15_2014/input_3.csv";
     private static final String DEFAULT_INPUT_FOLDER = "data/input/";
+    private static final String DEFAULT_TEMP_INPUT_FOLDER = "data/input/temp/";
     private static final String DEFAULT_OUTPUT_FOLDER = "data/output/";
 
     private static final int DEFAULT_WORD_TOKEN_SIZE = 1;
 
     public static void main(String[] args) throws IOException {
+    	
+    	
         String inputFile = DEFAULT_FILE;
         if (args.length > 0) {
             inputFile = args[0];
@@ -31,6 +36,7 @@ public class Adwords {
         constructOutputFileFromInputFile(DEFAULT_INPUT_FOLDER + inputFile, DEFAULT_OUTPUT_FOLDER + outputFile,
                 DEFAULT_WORD_TOKEN_SIZE);
     }
+    
 
     private static void constructOutputFileFromInputFile(String inputFile, String outputFile, int wordsTogether) {
 
