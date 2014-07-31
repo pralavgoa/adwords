@@ -13,7 +13,7 @@ import com.google.common.base.Strings;
 
 public class SeparateCampaignsFromFile {
 
-    private static final String DEFAULT_INPUT_FOLDER = "data/input/7_29_2014/input_3.csv";
+    private static final String DEFAULT_INPUT_FOLDER = "data/input/7_29_2014/input_4.csv";
     private static final String DEFAULT_TEMP_INPUT_FOLDER = "data/input/temp/";
 
     public static void main(String[] args) throws IOException {

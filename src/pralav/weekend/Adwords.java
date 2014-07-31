@@ -107,11 +107,26 @@ public class Adwords {
         System.out.println("Printing map to file: " + outputFile + " \n");
 
         appendToFile(outputFile, "word,clicks,impressions,cost,convertedClicks");
+        boolean hasWordWithNoConvertedClicks = false;
         for (String key : mapOfTerms.keySet()) {
             SearchTermMetrics metrics = mapOfTerms.get(key);
-
+            if(metrics.getConvertedClicks()>0){
             appendToFile(outputFile, "\n" + key + "," + metrics.getClicks() + "," + metrics.getImpressions() + ","
                     + metrics.getCost() + "," + metrics.getConvertedClicks() + ",");
+            }else{
+            	hasWordWithNoConvertedClicks = true;
+            }
+        }
+        
+        if(hasWordWithNoConvertedClicks){
+        	appendToFile(outputFile+"_0", "word,clicks,impressions,cost,convertedClicks");
+        	for (String key : mapOfTerms.keySet()) {
+                SearchTermMetrics metrics = mapOfTerms.get(key);
+                if(metrics.getConvertedClicks()==0){
+                appendToFile(outputFile+"_0", "\n" + key + "," + metrics.getClicks() + "," + metrics.getImpressions() + ","
+                        + metrics.getCost() + "," + metrics.getConvertedClicks() + ",");
+                }
+            }
         }
 
     }
