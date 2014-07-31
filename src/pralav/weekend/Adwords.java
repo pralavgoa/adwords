@@ -1,8 +1,6 @@
 package pralav.weekend;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
@@ -15,28 +13,28 @@ import com.google.common.io.Files;
 
 public class Adwords {
 
-    private static final String DEFAULT_FILE = "7_15_2014/input_3.csv";
-    private static final String DEFAULT_INPUT_FOLDER = "data/input/";
-    private static final String DEFAULT_TEMP_INPUT_FOLDER = "data/input/temp/";
-    private static final String DEFAULT_OUTPUT_FOLDER = "data/output/";
+    private static final String DEFAULT_INPUT_FOLDER = "data/input/temp/";
+    private static final String DEFAULT_OUTPUT_FOLDER = "data/output/7_29_2014/";
 
     private static final int DEFAULT_WORD_TOKEN_SIZE = 1;
 
     public static void main(String[] args) throws IOException {
-    	
-    	
-        String inputFile = DEFAULT_FILE;
-        if (args.length > 0) {
-            inputFile = args[0];
+        File[] listOfFiles = getListOfFiles(DEFAULT_INPUT_FOLDER);
+        for (int i = 0; i < listOfFiles.length; i++) {
+            if (listOfFiles[i].isFile()) {
+                String fileName = listOfFiles[i].getName();
+                constructOutputFileFromInputFile(DEFAULT_INPUT_FOLDER + fileName, DEFAULT_OUTPUT_FOLDER + fileName,
+                        DEFAULT_WORD_TOKEN_SIZE);
+            } else if (listOfFiles[i].isDirectory()) {
+                System.out.println("Directory " + listOfFiles[i].getName());
+            }
         }
-        String outputFile = DEFAULT_FILE;
-        if (args.length > 1) {
-            outputFile = args[1];
-        }
-        constructOutputFileFromInputFile(DEFAULT_INPUT_FOLDER + inputFile, DEFAULT_OUTPUT_FOLDER + outputFile,
-                DEFAULT_WORD_TOKEN_SIZE);
     }
-    
+
+    public static File[] getListOfFiles(String pathToDirectory) {
+        File folder = new File(pathToDirectory);
+        return folder.listFiles();
+    }
 
     private static void constructOutputFileFromInputFile(String inputFile, String outputFile, int wordsTogether) {
 
@@ -54,12 +52,8 @@ public class Adwords {
             int lineNumber = 0;
             while ((nextLine = reader.readNext()) != null) {
                 lineNumber++;
-                if ((lineNumber == 1)) {
-                    System.out.println("Skipping line number " + lineNumber);
-                    continue;
-                }
 
-                if (lineNumber == 2) {
+                if (lineNumber == 1) {
                     System.out.println("Processing header line " + lineNumber);
                     headerLineParts = new HeaderLineParts(nextLine);
                     continue;
