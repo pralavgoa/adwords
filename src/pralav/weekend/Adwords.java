@@ -5,7 +5,11 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
+import org.apache.commons.io.FileUtils;
+
+import pralav.weekend.configuration.AdwordsConfig;
 import au.com.bytecode.opencsv.CSVReader;
 
 import com.google.common.base.Charsets;
@@ -13,18 +17,30 @@ import com.google.common.io.Files;
 
 public class Adwords {
 
-    private static final String DEFAULT_INPUT_FOLDER = "data/input/temp/";
-    private static final String DEFAULT_OUTPUT_FOLDER = "data/output/7_29_2014/";
-
-    private static final int DEFAULT_WORD_TOKEN_SIZE = 1;
-
-    public static void main(String[] args) throws IOException {
-        File[] listOfFiles = getListOfFiles(DEFAULT_INPUT_FOLDER);
+    private static final String DEFAULT_TEMP_SUB_FOLDER = "temp";
+    
+    public static void clean(String outputFolder) throws IOException{
+    	File dir = new File(outputFolder);
+    	if(dir.exists()){
+    	FileUtils.cleanDirectory(new File(outputFolder)); 
+    	}else{
+    		dir.mkdirs();
+    	}
+    }
+    
+    public static void runMe(AdwordsConfig config, String outputFolderName, int workTokenSize) throws IOException{
+    	
+    	String tempFolder = FilePathUtils.getFolderPath(config.getDataFolderPath(),DEFAULT_TEMP_SUB_FOLDER);
+    	String outputFolder = FilePathUtils.getFolderPath(config.getDataFolderPath(),"output",outputFolderName);
+    	
+    	clean(outputFolder);
+    	
+        File[] listOfFiles = getListOfFiles(tempFolder);
         for (int i = 0; i < listOfFiles.length; i++) {
             if (listOfFiles[i].isFile()) {
                 String fileName = listOfFiles[i].getName();
-                constructOutputFileFromInputFile(DEFAULT_INPUT_FOLDER + fileName, DEFAULT_OUTPUT_FOLDER + fileName,
-                        DEFAULT_WORD_TOKEN_SIZE);
+                constructOutputFileFromInputFile(tempFolder+ fileName, outputFolder + fileName,
+                		workTokenSize, config);
             } else if (listOfFiles[i].isDirectory()) {
                 System.out.println("Directory " + listOfFiles[i].getName());
             }
@@ -36,10 +52,10 @@ public class Adwords {
         return folder.listFiles();
     }
 
-    private static void constructOutputFileFromInputFile(String inputFile, String outputFile, int wordsTogether) {
+    private static void constructOutputFileFromInputFile(String inputFile, String outputFile, int wordsTogether,AdwordsConfig config) {
 
         Map<String, SearchTermMetrics> mapOfTerms = new HashMap<>();
-
+        Set<String> wordsToExclude = config.getStopWords();
         try {
 
             System.out.println("Reading input file: " + inputFile);
@@ -69,6 +85,12 @@ public class Adwords {
 
                 while (ngramIterator.hasNext()) {
                     String word = ngramIterator.next();
+                    
+                    if(wordsToExclude.contains(word)){
+                    	//skip word
+                    	continue;
+                    }
+                    
                     if (mapOfTerms.keySet().contains(word)) {
 
                         SearchTermMetrics metrics = mapOfTerms.get(word);
@@ -133,7 +155,7 @@ public class Adwords {
 
     private static void appendToFile(String fileName, String stringToAppend) {
         try {
-            File to = new File(fileName);
+            File to = new File(fileName+".csv");
 
             Files.append(stringToAppend, to, Charsets.UTF_8);
         } catch (IOException e) {

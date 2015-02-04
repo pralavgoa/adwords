@@ -7,22 +7,34 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import org.apache.commons.io.FileUtils;
+
 import au.com.bytecode.opencsv.CSVReader;
 
 import com.google.common.base.Strings;
 
 public class SeparateCampaignsFromFile {
+  
+	private static final String DEFAULT_TEMP_SUB_FOLDER = "temp";
+	private static final String DEFAULT_INPUT_FILE_NAME = "input.csv";
 
-    private static final String DEFAULT_INPUT_FOLDER = "data/input/7_29_2014/input_4.csv";
-    private static final String DEFAULT_TEMP_INPUT_FOLDER = "data/input/temp/";
-
-    public static void main(String[] args) throws IOException {
-
-        separateCampaignsToMultipleFiles(DEFAULT_INPUT_FOLDER);
+    public static void clean(String tempFolder) throws IOException{
+    	File tempDir = new File(tempFolder);
+    	if(tempDir.exists()){
+    		FileUtils.cleanDirectory(tempDir); 
+    	}else{
+    		tempDir.mkdir();
+    	}
+    	
     }
-
-    private static void separateCampaignsToMultipleFiles(String inputFile) throws IOException {
-        CSVReader reader = new CSVReader(new FileReader(inputFile));
+    
+    public static void run(String dataFolder) throws IOException {
+    	
+    	String tempFolder = FilePathUtils.getFolderPath(dataFolder,DEFAULT_TEMP_SUB_FOLDER);
+    	
+    	clean(tempFolder);
+    	
+        CSVReader reader = new CSVReader(new FileReader(FilePathUtils.getFilePath(dataFolder,DEFAULT_INPUT_FILE_NAME)));
         String[] nextLine;
         int lineNumber = 0;
         String headerLine = null;
@@ -46,13 +58,13 @@ public class SeparateCampaignsFromFile {
                 continue;
             }
 
-            File file = new File(DEFAULT_TEMP_INPUT_FOLDER + campaignName);
+            File file = new File(tempFolder + campaignName);
             if (!file.exists()) {
                 file.createNewFile();
-                System.out.println("Create new file " + DEFAULT_TEMP_INPUT_FOLDER + campaignName);
-                writeLineToFile(DEFAULT_TEMP_INPUT_FOLDER + campaignName, headerLine);
+                System.out.println("Create new file " + tempFolder + campaignName);
+                writeLineToFile(tempFolder + campaignName, headerLine);
             }
-            writeLineToFile(DEFAULT_TEMP_INPUT_FOLDER + campaignName, getLineFromParts(nextLine));
+            writeLineToFile(tempFolder + campaignName, getLineFromParts(nextLine));
         }
 
     }
