@@ -1,8 +1,8 @@
-package pralav.weekend;
+package pralav.weekend.utils;
 
 import java.util.Iterator;
 
-class NgramIterator implements Iterator<String> {
+public class NgramIterator implements Iterator<String> {
 
     String[] words;
     int pos = 0, n;

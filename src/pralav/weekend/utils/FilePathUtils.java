@@ -1,4 +1,4 @@
-package pralav.weekend;
+package pralav.weekend.utils;
 
 public class FilePathUtils {
 

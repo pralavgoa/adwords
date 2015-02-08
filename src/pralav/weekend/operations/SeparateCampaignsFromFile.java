@@ -1,4 +1,4 @@
-package pralav.weekend;
+package pralav.weekend.operations;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -9,14 +9,13 @@ import java.io.PrintWriter;
 
 import org.apache.commons.io.FileUtils;
 
+import pralav.weekend.AdwordsConstants;
+import pralav.weekend.utils.FilePathUtils;
 import au.com.bytecode.opencsv.CSVReader;
 
 import com.google.common.base.Strings;
 
 public class SeparateCampaignsFromFile {
-  
-	private static final String DEFAULT_TEMP_SUB_FOLDER = "temp";
-	private static final String DEFAULT_INPUT_FILE_NAME = "input.csv";
 
     public static void clean(String tempFolder) throws IOException{
     	File tempDir = new File(tempFolder);
@@ -30,11 +29,11 @@ public class SeparateCampaignsFromFile {
     
     public static void run(String dataFolder) throws IOException {
     	
-    	String tempFolder = FilePathUtils.getFolderPath(dataFolder,DEFAULT_TEMP_SUB_FOLDER);
+    	String tempFolder = FilePathUtils.getFolderPath(dataFolder,AdwordsConstants.DEFAULT_TEMP_SUB_FOLDER);
     	
     	clean(tempFolder);
     	
-        CSVReader reader = new CSVReader(new FileReader(FilePathUtils.getFilePath(dataFolder,DEFAULT_INPUT_FILE_NAME)));
+        CSVReader reader = new CSVReader(new FileReader(FilePathUtils.getFilePath(dataFolder,AdwordsConstants.DEFAULT_INPUT_FILE_NAME)));
         String[] nextLine;
         int lineNumber = 0;
         String headerLine = null;

@@ -1,4 +1,4 @@
-package pralav.weekend;
+package pralav.weekend.configuration;
 
 import java.io.File;
 import java.io.IOException;

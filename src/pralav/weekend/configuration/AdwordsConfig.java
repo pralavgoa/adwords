@@ -4,8 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Set;
 
-import pralav.weekend.FilePathUtils;
-import pralav.weekend.StopWordsParser;
+import pralav.weekend.utils.FilePathUtils;
 
 public class AdwordsConfig {
 
@@ -21,7 +20,7 @@ public class AdwordsConfig {
 		 
 		File dataFolder = new File(dataFolderPath);
 		if(!dataFolder.exists()){
-			throw new IllegalArgumentException("The data folder provided is invalid");
+			throw new IllegalArgumentException("The data folder provided is invalid '"+dataFolderPath+"'");
 		}
 		
 		File configFolder = new File(configFolderPath);
