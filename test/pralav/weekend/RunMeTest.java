@@ -6,10 +6,13 @@ import org.junit.Test;
 
 public class RunMeTest {
 
-	@Test
-	public void runMeTest() throws IOException{
-		String[] inputParams = {"C:\\_Pralav\\workspace\\Adwords\\data\\unit_test\\v2","1"};
-		RunMe.main(inputParams);
-	}
-	
+    @Test
+    public void runMeTest() throws IOException {
+        // String[] inputParams =
+        // {"C:\\_Pralav\\workspace\\Adwords\\data\\unit_test\\v2","1"};
+        String[] inputParams = { "C:\\_Pralav\\personal\\projects\\adwords", "1" };
+
+        RunMe.main(inputParams);
+    }
+
 }
