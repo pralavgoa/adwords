@@ -13,8 +13,6 @@ public class SearchTermMetrics {
     private int convertedClicks;
     private double totalConvValue;
 
-    private double valuePerConvertedClick;
-
     public SearchTermMetrics(String token, String campaign, int clicks, int impressions, double cost,
             int convertedClicks, double totalConvValue) {
 
@@ -121,20 +119,6 @@ public class SearchTermMetrics {
     }
 
     /**
-     * @Return Value/Conversion / Costs
-     */
-    public double calcAndGetValuePerConvPerCost() {
-        if (this.cost == 0) {
-            if (this.valuePerConvertedClick != 0) {
-                throw new IllegalArgumentException(
-                        "The number of clicks is 0, but the number of converted clicks is non zero");
-            }
-            return 0;
-        }
-        return (this.valuePerConvertedClick / this.cost);
-    }
-
-    /**
      * @Return Revenue - Costs
      */
     public double calcAndGetProfit() {
@@ -162,7 +146,7 @@ public class SearchTermMetrics {
     }
 
     public String getToken() {
-        return token;
+        return this.token;
     }
 
 }

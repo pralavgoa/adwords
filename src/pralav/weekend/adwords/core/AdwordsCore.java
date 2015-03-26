@@ -14,8 +14,7 @@ import pralav.weekend.utils.WordUtils;
 import au.com.bytecode.opencsv.CSVReader;
 
 public class AdwordsCore {
-    public static void constructOutputFileFromInputFile(String inputFile, String outputFile, int wordsTogether,
-            AdwordsConfig config) {
+    public static void populateDBFromInputFile(String inputFile, int wordsTogether, AdwordsConfig config) {
 
         TokensCollection tableOfTokens = new TokensCollection();
 
