@@ -2,6 +2,8 @@ package pralav.weekend.adwords.core;
 
 public class FileLineParts {
 
+    private final String accountFileName;
+
     private final String accountName;
     private final String wordline;
     private final String matchType;
@@ -17,7 +19,8 @@ public class FileLineParts {
     private final double totalConvValue;
     private final int convertedClicks;
 
-    public FileLineParts(HeaderLineParts headerLineParts, String[] lineParts) {
+    public FileLineParts(String accountFileName, HeaderLineParts headerLineParts, String[] lineParts) {
+        this.accountFileName = accountFileName;
         try {
             this.accountName = lineParts[headerLineParts.getAccountColumnNumber()];
             this.wordline = lineParts[headerLineParts.getWordsColumnNumber()];
@@ -98,6 +101,10 @@ public class FileLineParts {
 
     public String getCampaignName() {
         return this.campaignName;
+    }
+
+    public String getAccountFileName() {
+        return this.accountFileName;
     }
 
 }

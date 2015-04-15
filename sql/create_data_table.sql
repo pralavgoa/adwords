@@ -1,5 +1,7 @@
-CREATE TABLE `search_term_metrics` (
+CREATE TABLE `stm_${dataTableName}` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `account` varchar(100) NOT NULL,
+  `ad_group` varchar(100) NOT NULL,
   `word` varchar(200) NOT NULL,
   `campaign` varchar(200) DEFAULT NULL,
   `impressions` int(11) DEFAULT NULL,

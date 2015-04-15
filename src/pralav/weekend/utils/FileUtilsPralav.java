@@ -9,9 +9,17 @@ import com.google.common.base.Charsets;
 import com.google.common.io.Files;
 
 public class FileUtilsPralav {
+
+    public static void makeDir(String path, String dirName) {
+        File file = new File(FilePathUtils.getFilePath(path, dirName));
+        if (!file.exists()) {
+            file.mkdir();
+        }
+    }
+
     public static void appendToFile(String fileName, String stringToAppend) {
         try {
-            File to = new File(fileName + ".csv");
+            File to = new File(fileName);
 
             Files.append(stringToAppend, to, Charsets.UTF_8);
         } catch (IOException e) {

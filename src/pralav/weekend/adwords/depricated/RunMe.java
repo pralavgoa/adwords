@@ -1,17 +1,19 @@
-package pralav.weekend;
+package pralav.weekend.adwords.depricated;
 
 import java.io.IOException;
 
-import pralav.weekend.adwords.types.AdwordsDatabaseLoadNoOutput;
+import pralav.weekend.adwords.types.AdwordsMultiCampaignOutput;
+import pralav.weekend.adwords.types.AdwordsSingleFileOutput;
 import pralav.weekend.configuration.AdwordsConfig;
 
 public class RunMe {
 
     private static final int DEFAULT_WORD_TOKEN_SIZE = 1;
 
-    // Read all csv files in a specific folder, process them, and add them to
-    // database
+    private static int RUN_MODE = 1;
+
     public static void main(String[] args) throws IOException {
+
         int wordTokenSize = DEFAULT_WORD_TOKEN_SIZE;
         if (args.length < 1) {
             throw new IllegalArgumentException("Please provide the folder path");
@@ -22,15 +24,17 @@ public class RunMe {
         System.out.println("The word token size is set to " + wordTokenSize);
         String dataAndConfigFolderPath = args[0];
         AdwordsConfig config = new AdwordsConfig(dataAndConfigFolderPath);
-        System.out.println("Using data folder path: " + config.getDataFolderPath());
 
         long startTimeMillis = System.currentTimeMillis();
 
-        AdwordsDatabaseLoadNoOutput.runMe(config, wordTokenSize);
-
+        if (RUN_MODE == 1) {
+            AdwordsSingleFileOutput.runMe(config, "" + startTimeMillis, wordTokenSize);
+        } else {
+            SeparateCampaignsFromFile.run(config.getDataFolderPath());
+            AdwordsMultiCampaignOutput.runMe(config, "" + startTimeMillis, wordTokenSize);
+        }
         long endTimeMillis = System.currentTimeMillis();
         System.out.println("Adwords program has finished running. Milliseconds:" + (endTimeMillis - startTimeMillis));
-
     }
 
 }

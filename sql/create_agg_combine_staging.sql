@@ -1,0 +1,1 @@
+CREATE TABLE ${stagingTableName} LIKE `${inputTableName}`;

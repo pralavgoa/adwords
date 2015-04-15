@@ -11,10 +11,12 @@ import pralav.weekend.database.DB;
 import pralav.weekend.utils.FilePrinters;
 import pralav.weekend.utils.NgramIterator;
 import pralav.weekend.utils.WordUtils;
-import au.com.bytecode.opencsv.CSVReader;
+
+import com.opencsv.CSVReader;
 
 public class AdwordsCore {
-    public static void populateDBFromInputFile(String inputFile, int wordsTogether, AdwordsConfig config) {
+    public static void populateDBFromInputFile(String inputFolder, String inputFile, int wordsTogether,
+            AdwordsConfig config) {
 
         TokensCollection tableOfTokens = new TokensCollection();
 
@@ -46,7 +48,7 @@ public class AdwordsCore {
                     throw new IllegalStateException("Header line was not processed. Quitting program.");
                 }
 
-                FileLineParts lineParts = new FileLineParts(headerLineParts, nextLine);
+                FileLineParts lineParts = new FileLineParts(inputFile, headerLineParts, nextLine);
 
                 String campaignName = lineParts.getCampaignName();
                 NgramIterator ngramIterator = new NgramIterator(wordsTogether, lineParts.getWordline());

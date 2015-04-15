@@ -4,12 +4,13 @@ import java.sql.SQLException;
 
 import org.junit.Test;
 
-import pralav.weekend.adwords.core.SearchTermMetrics;
-
 public class DBTest {
 
     @Test
     public void testDB() throws SQLException {
-        DB.persist(new SearchTermMetrics("A", "A", 1, 1, 1, 1, 1));
+        // DB.persist(new SearchTermMetrics("A", "A", "A", "A", 1, 1, 1, 1, 1));
+
+        DB.createDataLoadTable("hello");
     }
+
 }

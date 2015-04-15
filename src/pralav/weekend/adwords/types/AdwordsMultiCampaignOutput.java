@@ -24,7 +24,7 @@ public class AdwordsMultiCampaignOutput {
         for (int i = 0; i < listOfFiles.length; i++) {
             if (listOfFiles[i].isFile()) {
                 String fileName = listOfFiles[i].getName();
-                AdwordsCore.populateDBFromInputFile(tempFolder + fileName, workTokenSize, config);
+                AdwordsCore.populateDBFromInputFile(tempFolder, fileName, workTokenSize, config);
             } else if (listOfFiles[i].isDirectory()) {
                 System.out.println("Directory " + listOfFiles[i].getName());
             }

@@ -3,6 +3,8 @@ package pralav.weekend.adwords.core;
 public class SearchTermMetrics {
 
     // term metadata
+    private final String accountName;
+    private final String adGroup;
     private final String token;
     private final String campaign;
 
@@ -13,8 +15,11 @@ public class SearchTermMetrics {
     private int convertedClicks;
     private double totalConvValue;
 
-    public SearchTermMetrics(String token, String campaign, int clicks, int impressions, double cost,
-            int convertedClicks, double totalConvValue) {
+    public SearchTermMetrics(String accountName, String adGroup, String token, String campaign, int clicks,
+            int impressions, double cost, int convertedClicks, double totalConvValue) {
+
+        this.accountName = accountName;
+        this.adGroup = adGroup;
 
         this.token = token;
         this.campaign = campaign;
@@ -132,9 +137,9 @@ public class SearchTermMetrics {
     }
 
     public static SearchTermMetrics createSearchTermMetric(String word, FileLineParts lineParts) {
-        return new SearchTermMetrics(word, lineParts.getCampaignName(), lineParts.getClicks(),
-                lineParts.getImpressions(), lineParts.getCost(), lineParts.getConvertedClicks(),
-                lineParts.getTotalConvValue());
+        return new SearchTermMetrics(lineParts.getAccountName(), lineParts.getAdGroup(), word,
+                lineParts.getCampaignName(), lineParts.getClicks(), lineParts.getImpressions(), lineParts.getCost(),
+                lineParts.getConvertedClicks(), lineParts.getTotalConvValue());
     }
 
     public static void updateSearchTermMetrics(SearchTermMetrics metrics, FileLineParts lineParts) {
@@ -149,4 +154,11 @@ public class SearchTermMetrics {
         return this.token;
     }
 
+    public String getAccountName() {
+        return this.accountName;
+    }
+
+    public String getAdGroup() {
+        return this.adGroup;
+    }
 }

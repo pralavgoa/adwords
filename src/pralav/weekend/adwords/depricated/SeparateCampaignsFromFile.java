@@ -1,4 +1,4 @@
-package pralav.weekend.operations;
+package pralav.weekend.adwords.depricated;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -11,29 +11,30 @@ import org.apache.commons.io.FileUtils;
 
 import pralav.weekend.AdwordsConstants;
 import pralav.weekend.utils.FilePathUtils;
-import au.com.bytecode.opencsv.CSVReader;
 
 import com.google.common.base.Strings;
+import com.opencsv.CSVReader;
 
 public class SeparateCampaignsFromFile {
 
-    public static void clean(String tempFolder) throws IOException{
-    	File tempDir = new File(tempFolder);
-    	if(tempDir.exists()){
-    		FileUtils.cleanDirectory(tempDir); 
-    	}else{
-    		tempDir.mkdir();
-    	}
-    	
+    public static void clean(String tempFolder) throws IOException {
+        File tempDir = new File(tempFolder);
+        if (tempDir.exists()) {
+            FileUtils.cleanDirectory(tempDir);
+        } else {
+            tempDir.mkdir();
+        }
+
     }
-    
+
     public static void run(String dataFolder) throws IOException {
-    	
-    	String tempFolder = FilePathUtils.getFolderPath(dataFolder,AdwordsConstants.DEFAULT_TEMP_SUB_FOLDER);
-    	
-    	clean(tempFolder);
-    	
-        CSVReader reader = new CSVReader(new FileReader(FilePathUtils.getFilePath(dataFolder,AdwordsConstants.DEFAULT_INPUT_FILE_NAME)));
+
+        String tempFolder = FilePathUtils.getFolderPath(dataFolder, AdwordsConstants.DEFAULT_TEMP_SUB_FOLDER);
+
+        clean(tempFolder);
+
+        CSVReader reader = new CSVReader(new FileReader(FilePathUtils.getFilePath(dataFolder,
+                AdwordsConstants.DEFAULT_INPUT_FILE_NAME)));
         String[] nextLine;
         int lineNumber = 0;
         String headerLine = null;

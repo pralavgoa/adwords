@@ -15,7 +15,7 @@ public class AdwordsSingleFileOutput {
         String outputFolder = FilePathUtils.getFolderPath(config.getDataFolderPath(),
                 AdwordsConstants.DEFAULT_OUTPUT_FOLDER, outputFolderName);
         FileUtilsPralav.cleanDirectory(outputFolder);
-        AdwordsCore.populateDBFromInputFile(inputFolder + AdwordsConstants.DEFAULT_INPUT_FILE_NAME, workTokenSize,
+        AdwordsCore.populateDBFromInputFile(inputFolder, AdwordsConstants.DEFAULT_INPUT_FILE_NAME, workTokenSize,
                 config);
     }
 

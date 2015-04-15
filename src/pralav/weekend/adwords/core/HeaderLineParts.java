@@ -2,48 +2,46 @@ package pralav.weekend.adwords.core;
 
 public class HeaderLineParts {
 
-	private final int accountColumnNumber;
-	private final int wordsColumnNumber;
-	private final int matchTypeColumnNumber;
+    private final int accountColumnNumber;
+    private final int wordsColumnNumber;
+    private final int matchTypeColumnNumber;
     private final int campaignNameColumnNumber;
     private final int adGroupColumnNumber;
     private final int keywordColumnNumber;
     private final int clicksColumnNumber;
     private final int impressionsColumnNumber;
-	private final int ctrColumnNumber;
+    private final int ctrColumnNumber;
     private final int avgCPCColumnNumber;
     private final int costColumnNumber;
     private final int addedExcludedColumnNumber;
     private final int totalConvValueColumnNumber;
     private final int convertedClicksColumnNumber;
-    
+
     public HeaderLineParts(String[] headerLine) {
 
-        int accountNo = -1, searchTermNo = -1,matchTypeNo=-1, campaignNo = -1,adGroupNo = -1,
-        		keywordNo = -1,	clicksNo = -1, impressionsNo = -1, ctrNo = -1,avgCPCNo =-1,
-        	 costNo = -1,addedExcludedNo=-1,totalConvValueNo=-1, convertedClicksNo = -1;
+        int accountNo = 0, searchTermNo = -1, matchTypeNo = -1, campaignNo = -1, adGroupNo = -1, keywordNo = -1, clicksNo = -1, impressionsNo = -1, ctrNo = -1, avgCPCNo = -1, costNo = -1, addedExcludedNo = -1, totalConvValueNo = -1, convertedClicksNo = -1;
 
         int headerColumnNo = 0;
         for (String header : headerLine) {
             switch (header.toLowerCase().trim()) {
             case "account":
-            	accountNo = headerColumnNo;
-            	break;
+                accountNo = headerColumnNo;
+                break;
             case "search term":
                 searchTermNo = headerColumnNo;
                 break;
             case "match type":
-            	matchTypeNo = headerColumnNo;
-            	break;
+                matchTypeNo = headerColumnNo;
+                break;
             case "campaign":
                 campaignNo = headerColumnNo;
                 break;
             case "ad group":
-            	adGroupNo = headerColumnNo;
-            	break;
+                adGroupNo = headerColumnNo;
+                break;
             case "keyword":
-            	keywordNo = headerColumnNo;
-            	break;
+                keywordNo = headerColumnNo;
+                break;
             case "clicks":
                 clicksNo = headerColumnNo;
                 break;
@@ -51,20 +49,20 @@ public class HeaderLineParts {
                 impressionsNo = headerColumnNo;
                 break;
             case "ctr":
-            	ctrNo = headerColumnNo;
-            	break;
+                ctrNo = headerColumnNo;
+                break;
             case "avg. cpc":
-            	avgCPCNo = headerColumnNo;
-            	break;
+                avgCPCNo = headerColumnNo;
+                break;
             case "cost":
                 costNo = headerColumnNo;
                 break;
             case "added/excluded":
-            	addedExcludedNo = headerColumnNo;
-            	break;
+                addedExcludedNo = headerColumnNo;
+                break;
             case "total conv. value":
-            	totalConvValueNo = headerColumnNo;
-            	break;
+                totalConvValueNo = headerColumnNo;
+                break;
             case "converted clicks":
                 convertedClicksNo = headerColumnNo;
                 break;
@@ -114,38 +112,37 @@ public class HeaderLineParts {
     public int getConvertedClicksColumnNumber() {
         return this.convertedClicksColumnNumber;
     }
-	
+
     public int getAccountColumnNumber() {
-		return accountColumnNumber;
-	}
+        return this.accountColumnNumber;
+    }
 
-	public int getMatchTypeColumnNumber() {
-		return matchTypeColumnNumber;
-	}
+    public int getMatchTypeColumnNumber() {
+        return this.matchTypeColumnNumber;
+    }
 
-	public int getAdGroupColumnNumber() {
-		return adGroupColumnNumber;
-	}
+    public int getAdGroupColumnNumber() {
+        return this.adGroupColumnNumber;
+    }
 
-	public int getKeywordColumnNumber() {
-		return keywordColumnNumber;
-	}
+    public int getKeywordColumnNumber() {
+        return this.keywordColumnNumber;
+    }
 
-	public int getCtrColumnNumber() {
-		return ctrColumnNumber;
-	}
+    public int getCtrColumnNumber() {
+        return this.ctrColumnNumber;
+    }
 
-	public int getAvgCPCColumnNumber() {
-		return avgCPCColumnNumber;
-	}
+    public int getAvgCPCColumnNumber() {
+        return this.avgCPCColumnNumber;
+    }
 
-	public int getAddedExcludedColumnNumber() {
-		return addedExcludedColumnNumber;
-	}
+    public int getAddedExcludedColumnNumber() {
+        return this.addedExcludedColumnNumber;
+    }
 
-	public int getTotalConvValueColumnNumber() {
-		return totalConvValueColumnNumber;
-	}
-
+    public int getTotalConvValueColumnNumber() {
+        return this.totalConvValueColumnNumber;
+    }
 
 }

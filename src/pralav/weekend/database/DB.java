@@ -1,5 +1,6 @@
 package pralav.weekend.database;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -14,6 +15,8 @@ import pralav.weekend.adwords.core.SearchTermMetrics;
 import pralav.weekend.adwords.core.TokensCollection;
 
 import com.google.common.collect.Table.Cell;
+
+import freemarker.template.TemplateException;
 
 public class DB {
 
@@ -30,26 +33,44 @@ public class DB {
         }
     }
 
-    public static void persist(SearchTermMetrics searchTermMetrics) throws SQLException {
+    public static void batchPersist(List<SearchTermMetrics> list, String tableName) throws SQLException {
         Connection conn = getDBConnection();
-        PreparedStatement stmt = conn.prepareStatement("INSERT INTO `adwords`.`search_term_metrics` "
-                + "(`word`, `campaign`, `impressions`, `clicks`, `converted_clicks`, `total_conv_value`, `cost`) "
-                + "VALUES (?, ?, ?, ?, ?, ?, ?)");
-        stmt.setString(1, searchTermMetrics.getToken());
-        stmt.setString(2, searchTermMetrics.getCampaign());
-        stmt.setInt(3, searchTermMetrics.getImpressions());
-        stmt.setInt(4, searchTermMetrics.getClicks());
-        stmt.setInt(5, searchTermMetrics.getConvertedClicks());
-        stmt.setDouble(6, searchTermMetrics.getTotalConvValue());
-        stmt.setDouble(7, searchTermMetrics.getCost());
-        stmt.execute();
+        conn.setAutoCommit(false);
+        PreparedStatement stmt = conn.prepareStatement("INSERT INTO `adwords`.`stm_" + tableName + "` "
+                + "(`word`, `campaign`, `impressions`, `clicks`, `converted_clicks`, "
+                + "`total_conv_value`, `cost`,`account`,`ad_group`) " + "VALUES (?, ?, ?, ?, ?, ?, ?,?,?)");
+        for (int i = 0; i < list.size(); i++) {
+            SearchTermMetrics searchTermMetrics = list.get(i);
+            stmt.setString(1, searchTermMetrics.getToken());
+            stmt.setString(2, searchTermMetrics.getCampaign());
+            stmt.setInt(3, searchTermMetrics.getImpressions());
+            stmt.setInt(4, searchTermMetrics.getClicks());
+            stmt.setInt(5, searchTermMetrics.getConvertedClicks());
+            stmt.setDouble(6, searchTermMetrics.getTotalConvValue());
+            stmt.setDouble(7, searchTermMetrics.getCost());
+            stmt.setString(8, searchTermMetrics.getAccountName());
+            stmt.setString(9, searchTermMetrics.getAdGroup());
+            stmt.addBatch();
+            if (((i + 1) % 10000) == 0) {
+                stmt.executeBatch(); // Execute every 10000 items.
+                conn.commit();
+            }
+        }
+        stmt.executeBatch();
+        conn.commit();
     }
 
-    public static void saveToFileSelectStatement(String selectStatement) throws SQLException {
+    public static void persist(SearchTermMetrics searchTermMetrics) throws SQLException {
+        List<SearchTermMetrics> termList = new ArrayList<>();
+        termList.add(searchTermMetrics);
+        batchPersist(termList, "tableName");
+    }
+
+    public static void executeSQL(String sql) throws SQLException {
         System.out.println("Executing: ");
-        System.out.println(selectStatement);
+        System.out.println(sql);
         Connection conn = getDBConnection();
-        PreparedStatement stmt = conn.prepareStatement(selectStatement);
+        PreparedStatement stmt = conn.prepareStatement(sql);
         stmt.execute();
     }
 
@@ -87,8 +108,25 @@ public class DB {
                 System.out.println("DataBank init Error: " + e);
             }
             connection = DriverManager
-                    .getConnection("jdbc:mysql://localhost/adwords?user=root&password=&autoReconnect=true");
+                    .getConnection("jdbc:mysql://localhost:3306/adwords?useServerPrepStmts=false&rewriteBatchedStatements=true&user=root&password=&autoReconnect=true");
         }
         return connection;
+    }
+
+    public static void createDataLoadTable(String name) {
+        try {
+            SQLTemplateUtil sqlTemplate = new SQLTemplateUtil("sql");
+            Map<String, Object> mapOfParameters = new HashMap<>();
+            mapOfParameters.put("dataTableName", name);
+            String sql = sqlTemplate.getSQLFromTemplate(mapOfParameters, "create_data_table.sql");
+            Connection conn = getDBConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.execute();
+        } catch (IOException | TemplateException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
     }
 }
