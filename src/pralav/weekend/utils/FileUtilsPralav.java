@@ -2,6 +2,8 @@ package pralav.weekend.utils;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 
@@ -41,4 +43,16 @@ public class FileUtilsPralav {
         return folder.listFiles();
     }
 
+    public static List<String> getFilesInFolder(String folderPath) {
+        List<String> fileNamesList = new ArrayList<>();
+        File[] files = getListOfFiles(folderPath);
+        for (int i = 0; i < files.length; i++) {
+            if (files[i].isFile()) {
+                fileNamesList.add(files[i].getName());
+            } else if (files[i].isDirectory()) {
+                System.out.println("Directory " + files[i].getName());
+            }
+        }
+        return fileNamesList;
+    }
 }

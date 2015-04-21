@@ -10,7 +10,7 @@ public class DBTest {
     public void testDB() throws SQLException {
         // DB.persist(new SearchTermMetrics("A", "A", "A", "A", 1, 1, 1, 1, 1));
 
-        DB.createDataLoadTable("hello");
+        DB.createDataLoadTable("hello", 1);
     }
 
 }

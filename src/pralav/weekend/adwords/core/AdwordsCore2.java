@@ -82,7 +82,7 @@ public class AdwordsCore2 {
                     termList.add(metrics);
                     termCount++;
                     if (termList.size() == 10000) {
-                        persistToDatabase(termList, inputFile, logFilePath);
+                        persistToDatabase(termList, inputFile + "_" + wordsTogether, logFilePath);
                         termList.clear();
                     }
                 }

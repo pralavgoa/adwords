@@ -16,7 +16,7 @@ public class RunMeTest {
         // String[] inputParams = {
         // "C:\\_Pralav\\personal\\projects\\adwords\\test", "1" };
 
-        String[] inputParams = { "C:\\_Pralav\\personal\\projects\\adwords\\april_data", "1" };
-        RunMe.main(inputParams);
+        String[] inputParams = { "E:\\_Pralav\\_Projects\\Adwords\\april_data", "4" };
+        // RunMe.main(inputParams);
     }
 }

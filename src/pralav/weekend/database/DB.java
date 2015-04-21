@@ -113,11 +113,11 @@ public class DB {
         return connection;
     }
 
-    public static void createDataLoadTable(String name) {
+    public static void createDataLoadTable(String name, int wordCount) {
         try {
             SQLTemplateUtil sqlTemplate = new SQLTemplateUtil("sql");
             Map<String, Object> mapOfParameters = new HashMap<>();
-            mapOfParameters.put("dataTableName", name);
+            mapOfParameters.put("dataTableName", name + "_" + wordCount);
             String sql = sqlTemplate.getSQLFromTemplate(mapOfParameters, "create_data_table.sql");
             Connection conn = getDBConnection();
             PreparedStatement stmt = conn.prepareStatement(sql);
