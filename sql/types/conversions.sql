@@ -1,8 +1,8 @@
-SELECT 'word','Campaign','impressions','clicks','convertedClicks','cost',
+SELECT 'word','Campaign','Ad Group','impressions','clicks','convertedClicks','cost',
 'CTR','CPC','Conversion Rate','CPA','Revenue','ROAS','Profit'
 UNION ALL
 SELECT 
-word, campaign, impressions, clicks, converted_clicks, 
+word, campaign,ad_group, impressions, clicks, converted_clicks, 
 CONCAT('$',ROUND(cost,2)) AS cost,
 CONCAT(ROUND(clicks*100/impressions,2),'%') AS ctr,
 CONCAT('$',ROUND(cost/clicks,2)) AS cpc,

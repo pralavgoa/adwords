@@ -14,18 +14,20 @@ import freemarker.template.TemplateException;
 
 public class ReportGenerator {
 
-    private static final String CSV_EXT = ".csv";
-    private static final String CONV_0 = "JustAnswer_0";
-    private static final String CONV_1 = "JustAnswer_1";
-    private static final String UPLOAD_FILE = "JustAnswer_Marin_Upload_File";
-    private static final String NEG_REC_FILE = "JustAnswer_Negatives_Recommendation";
+    public static final String CSV_EXT = ".csv";
+    public static final String CONV_0 = "JustAnswer_0";
+    public static final String CONV_1 = "JustAnswer_1";
+    public static final String UPLOAD_FILE = "JustAnswer_Marin_Upload_File";
+    public static final String NEG_REC_FILE = "JustAnswer_Negatives_Recommendation";
     private static final String CAMPAIGN_FOLDER = "campaign";
 
+    private final String accountName;
     private final String aggDataTableName;
     private final String outputDirectory;
     private final SQLTemplateUtil sqlTemplate;
 
-    public ReportGenerator(String aggDataTableName, String outputDirectory) throws IOException {
+    public ReportGenerator(String accountName, String aggDataTableName, String outputDirectory) throws IOException {
+        this.accountName = accountName;
         this.aggDataTableName = aggDataTableName;
         this.outputDirectory = outputDirectory;
         this.sqlTemplate = new SQLTemplateUtil(FilePathUtils.getFolderPath("sql", "types"));
@@ -33,16 +35,14 @@ public class ReportGenerator {
 
     public void generateReport() {
         this.LOG("Generating report for " + this.aggDataTableName);
-        for (String accountName : this.getAccountNames(this.aggDataTableName)) {
-            this.createDirectory(accountName);
-            this.generateZeroConversionsFile(accountName);
-            this.generateNonZeroConversionsFile(accountName);
-            this.generateMarinUploadFile(accountName);
-            this.generateNegRecFile(accountName);
-            for (String campaignName : this.getCampaignNames(accountName, this.aggDataTableName)) {
-                this.generateZeroConversionsFile(accountName, campaignName);
-                this.generateNonZeroConversionsFile(accountName, campaignName);
-            }
+        this.createDirectory(this.accountName);
+        this.generateZeroConversionsFile(this.accountName);
+        this.generateNonZeroConversionsFile(this.accountName);
+        this.generateMarinUploadFile(this.accountName);
+        this.generateNegRecFile(this.accountName);
+        for (String campaignName : this.getCampaignNames(this.accountName, this.aggDataTableName)) {
+            this.generateZeroConversionsFile(this.accountName, campaignName);
+            this.generateNonZeroConversionsFile(this.accountName, campaignName);
         }
         this.LOG("Finished generating report for " + this.aggDataTableName);
     }
@@ -131,16 +131,6 @@ public class ReportGenerator {
         } catch (IOException | TemplateException e) {
             e.printStackTrace();
         }
-    }
-
-    public List<String> getAccountNames(String aggDataTableName) {
-        List<String> accounts = null;
-        try {
-            accounts = DB.selectOneColumn("select distinct account from " + aggDataTableName);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return accounts;
     }
 
     public void createDirectory(String name) {
